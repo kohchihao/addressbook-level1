@@ -4,6 +4,9 @@
 
   # should recognise invalid command
   sfdfd
+  
+  # should recognise invalid command
+  add hello
 
 ##########################################################
 # clean and check state
