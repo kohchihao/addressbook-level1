@@ -36,8 +36,6 @@ public class AddressBook {
         NAME, EMAIL, PHONE
     }
 
-    ;
-
     /**
      * Default file path used if the user doesn't provide the file name.
      */
@@ -262,7 +260,9 @@ public class AddressBook {
             String feedback = executeCommand(userCommand);
             showResultToUser(feedback);
         }
+
     }
+
 
     /*
      * NOTE : =============================================================
@@ -324,13 +324,14 @@ public class AddressBook {
      */
     private static void setupGivenFileForStorage(String filePath) {
 
-        if (!isValidFilePath(filePath)) {
-            showToUser(String.format(MESSAGE_INVALID_FILE, filePath));
-            exitProgram();
+        if (isValidFilePath(filePath)) {
+            storageFilePath = filePath;
+            createFileIfMissing(filePath);
         }
 
-        storageFilePath = filePath;
-        createFileIfMissing(filePath);
+        showToUser(String.format(MESSAGE_INVALID_FILE, filePath));
+        exitProgram();
+
     }
 
     /**
@@ -472,7 +473,7 @@ public class AddressBook {
      */
     private static String executeAddPerson(String commandArgs) {
         // try decoding a person from the raw args
-        final Optional<HashMap<PersonProperty,String>> decodeResult =
+        final Optional<HashMap<PersonProperty, String>> decodeResult =
             decodePersonFromString(commandArgs);
 
         // checks if args are valid (decode result will not be present if the
@@ -483,7 +484,7 @@ public class AddressBook {
         }
 
         // add the person as specified
-        final HashMap<PersonProperty,String> personToAdd = decodeResult.get();
+        final HashMap<PersonProperty, String> personToAdd = decodeResult.get();
         addPersonToAddressBook(personToAdd);
         return getMessageForSuccessfulAddPerson(personToAdd);
     }
@@ -496,7 +497,7 @@ public class AddressBook {
      * @return successful add person feedback message
      * @see #executeAddPerson(String)
      */
-    private static String getMessageForSuccessfulAddPerson(HashMap<PersonProperty,String> addedPerson) {
+    private static String getMessageForSuccessfulAddPerson(HashMap<PersonProperty, String> addedPerson) {
         return String.format(MESSAGE_ADDED,
             getNameFromPerson(addedPerson), getPhoneFromPerson(addedPerson),
             getEmailFromPerson(addedPerson));
@@ -818,8 +819,8 @@ public class AddressBook {
      * @param filePath file to load from
      * @return the list of decoded persons
      */
-    private static ArrayList<HashMap<PersonProperty,String>> loadPersonsFromFile(String filePath) {
-        final Optional<ArrayList<HashMap<PersonProperty,String>>> successfullyDecoded =
+    private static ArrayList<HashMap<PersonProperty, String>> loadPersonsFromFile(String filePath) {
+        final Optional<ArrayList<HashMap<PersonProperty, String>>> successfullyDecoded =
             decodePersonsFromStrings(getLinesInFile(filePath));
         if (!successfullyDecoded.isPresent()) {
             showToUser(MESSAGE_INVALID_STORAGE_FILE_CONTENT);
@@ -879,7 +880,8 @@ public class AddressBook {
      *
      * @param person to add
      */
-    private static void addPersonToAddressBook(HashMap<PersonProperty,String> person) {
+    private static void addPersonToAddressBook(HashMap<PersonProperty,
+        String> person) {
         ALL_PERSONS.add(person);
         savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
     }
@@ -939,7 +941,6 @@ public class AddressBook {
      * @param person whose name you want
      */
     private static String getNameFromPerson(HashMap<PersonProperty, String> person) {
-        //return person[PERSON_DATA_INDEX_NAME];
         return person.get(PersonProperty.NAME);
     }
 
@@ -949,7 +950,6 @@ public class AddressBook {
      * @param person whose phone number you want
      */
     private static String getPhoneFromPerson(HashMap<PersonProperty, String> person) {
-        //return person[PERSON_DATA_INDEX_PHONE];
         return person.get(PersonProperty.PHONE);
     }
 
@@ -959,10 +959,8 @@ public class AddressBook {
      * @param person whose email you want
      */
     private static String getEmailFromPerson(HashMap<PersonProperty, String> person) {
-        //return person[PERSON_DATA_INDEX_EMAIL];
         return person.get(PersonProperty.EMAIL);
     }
-
 
 
     /**
@@ -971,16 +969,16 @@ public class AddressBook {
      * @param data person data
      * @return constructed person
      */
-    private static HashMap<PersonProperty,String> makePersonFromData(String... data) {
+    private static HashMap<PersonProperty, String> makePersonFromData(String... data) {
 
         String name = data[0];
         String phone = data[1];
         String email = data[2];
 
-        HashMap<PersonProperty,String> person = new HashMap<>();
-        person.put(PersonProperty.NAME,name);
-        person.put(PersonProperty.PHONE,phone);
-        person.put(PersonProperty.EMAIL,email);
+        HashMap<PersonProperty, String> person = new HashMap<>();
+        person.put(PersonProperty.NAME, name);
+        person.put(PersonProperty.PHONE, phone);
+        person.put(PersonProperty.EMAIL, email);
         return person;
     }
 
@@ -1026,13 +1024,14 @@ public class AddressBook {
      * @return if cannot decode: empty Optional
      * else: Optional containing decoded person
      */
-    private static Optional<HashMap<PersonProperty,String>> decodePersonFromString(String encoded) {
+    private static Optional<HashMap<PersonProperty, String>> decodePersonFromString(String encoded) {
         // check that we can extract the parts of a person from the encoded
         // string
         if (!isPersonDataExtractableFrom(encoded)) {
             return Optional.empty();
         }
-        final HashMap<PersonProperty,String> decodedPerson = makePersonFromData(
+        final HashMap<PersonProperty, String> decodedPerson =
+            makePersonFromData(
             extractNameFromPersonString(encoded),
             extractPhoneFromPersonString(encoded),
             extractEmailFromPersonString(encoded)
@@ -1049,11 +1048,11 @@ public class AddressBook {
      * @return if cannot decode any: empty Optional
      * else: Optional containing decoded persons
      */
-    private static Optional<ArrayList<HashMap<PersonProperty,String>>> decodePersonsFromStrings(ArrayList<String> encodedPersons) {
-        final ArrayList<HashMap<PersonProperty,String>> decodedPersons =
+    private static Optional<ArrayList<HashMap<PersonProperty, String>>> decodePersonsFromStrings(ArrayList<String> encodedPersons) {
+        final ArrayList<HashMap<PersonProperty, String>> decodedPersons =
             new ArrayList<>();
         for (String encodedPerson : encodedPersons) {
-            final Optional<HashMap<PersonProperty,String>> decodedPerson =
+            final Optional<HashMap<PersonProperty, String>> decodedPerson =
                 decodePersonFromString(encodedPerson);
             if (!decodedPerson.isPresent()) {
                 return Optional.empty();
@@ -1159,7 +1158,7 @@ public class AddressBook {
      * @param person String array representing the person (used in internal
      *               data)
      */
-    private static boolean isPersonDataValid(HashMap<PersonProperty,String> person) {
+    private static boolean isPersonDataValid(HashMap<PersonProperty, String> person) {
         return isPersonNameValid(person.get(PersonProperty.NAME))
             && isPersonPhoneValid(person.get(PersonProperty.PHONE))
             && isPersonEmailValid(person.get(PersonProperty.EMAIL));
