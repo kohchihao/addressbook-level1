@@ -312,11 +312,10 @@ public class AddressBook {
         if (isValidFilePath(filePath)) {
             storageFilePath = filePath;
             createFileIfMissing(filePath);
+        } else {
+            showToUser(String.format(MESSAGE_INVALID_FILE, filePath));
+            exitProgram();
         }
-
-        showToUser(String.format(MESSAGE_INVALID_FILE, filePath));
-        exitProgram();
-
     }
 
     /**
