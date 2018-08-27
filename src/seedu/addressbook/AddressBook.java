@@ -169,7 +169,7 @@ public class AddressBook {
 
     private static final String DIVIDER =
         "===================================================";
-    
+
 
     /**
      * Offset required to convert between 1-indexing and 0-indexing.COMMAND_
@@ -463,15 +463,18 @@ public class AddressBook {
 
         // checks if args are valid (decode result will not be present if the
         // person is invalid)
-        if (!decodeResult.isPresent()) {
-            return getMessageForInvalidCommandInput(COMMAND_ADD_WORD,
-                getUsageInfoForAddCommand());
+        if (decodeResult.isPresent()) {
+            // add the person as specified
+            final HashMap<PersonProperty, String> personToAdd = decodeResult.get();
+            addPersonToAddressBook(personToAdd);
+            return getMessageForSuccessfulAddPerson(personToAdd);
+
         }
 
-        // add the person as specified
-        final HashMap<PersonProperty, String> personToAdd = decodeResult.get();
-        addPersonToAddressBook(personToAdd);
-        return getMessageForSuccessfulAddPerson(personToAdd);
+        // checks if args are valid (decode result will not be present if the
+        // person is invalid)
+        return getMessageForInvalidCommandInput(COMMAND_ADD_WORD,
+            getUsageInfoForAddCommand());
     }
 
     /**
