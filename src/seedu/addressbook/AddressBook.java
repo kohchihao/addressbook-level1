@@ -1246,8 +1246,7 @@ public class AddressBook {
      * Returns string for showing 'help' command usage instruction
      */
     private static String getUsageInfoForHelpCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_HELP_WORD,
-                COMMAND_HELP_DESC)
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_HELP_WORD, COMMAND_HELP_DESC)
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_HELP_EXAMPLE);
     }
 
