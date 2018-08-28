@@ -853,8 +853,7 @@ public class AddressBook {
      *
      * @param person to add
      */
-    private static void addPersonToAddressBook(HashMap<PersonProperty,
-            String> person) {
+    private static void addPersonToAddressBook(HashMap<PersonProperty, String> person) {
         ALL_PERSONS.add(person);
         savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
     }
