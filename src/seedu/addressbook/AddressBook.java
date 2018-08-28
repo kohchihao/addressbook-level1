@@ -1072,15 +1072,13 @@ public class AddressBook {
      * @return phone number argument WITHOUT prefix
      */
     private static String extractPhoneFromPersonString(String encoded) {
-        final int indexOfPhonePrefix =
-                encoded.indexOf(PERSON_DATA_PREFIX_PHONE);
-        final int indexOfEmailPrefix =
-                encoded.indexOf(PERSON_DATA_PREFIX_EMAIL);
+        final int indexOfPhonePrefix = encoded.indexOf(PERSON_DATA_PREFIX_PHONE);
+        final int indexOfEmailPrefix = encoded.indexOf(PERSON_DATA_PREFIX_EMAIL);
 
         // phone is last arg, target is from prefix to end of string
         if (indexOfPhonePrefix > indexOfEmailPrefix) {
-            return removePrefixSign(encoded.substring(indexOfPhonePrefix,
-                    encoded.length()).trim(),
+            return removePrefixSign(
+                    encoded.substring(indexOfPhonePrefix, encoded.length()).trim(),
                     PERSON_DATA_PREFIX_PHONE);
 
             // phone is middle arg, target is from own prefix to next prefix
