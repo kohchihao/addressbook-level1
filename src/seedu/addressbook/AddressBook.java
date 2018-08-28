@@ -206,8 +206,7 @@ public class AddressBook {
     /**
      * List of all persons in the address book.
      */
-    private static final ArrayList<HashMap<PersonProperty, String>> ALL_PERSONS =
-            new ArrayList<>();
+    private static final ArrayList<HashMap<PersonProperty, String>> ALL_PERSONS = new ArrayList<>();
 
     /**
      * Stores the most recent list of persons shown to the user as a result
@@ -216,8 +215,7 @@ public class AddressBook {
      * does not delete
      * those persons from this list.
      */
-    private static ArrayList<HashMap<PersonProperty, String>> latestPersonListingView =
-            getAllPersonsInAddressBook(); // initial view is of all
+    private static ArrayList<HashMap<PersonProperty, String>> latestPersonListingView = getAllPersonsInAddressBook();
 
     /**
      * The path to the file used for storing person data.
