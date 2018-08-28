@@ -866,8 +866,7 @@ public class AddressBook {
      *                    (exactPerson == the person to delete in the full list)
      * @return true if the given person was found and deleted in the model
      */
-    private static boolean deletePersonFromAddressBook(HashMap<PersonProperty
-            , String> exactPerson) {
+    private static boolean deletePersonFromAddressBook(HashMap<PersonProperty, String> exactPerson) {
         final boolean changed = ALL_PERSONS.remove(exactPerson);
         if (changed) {
             savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
