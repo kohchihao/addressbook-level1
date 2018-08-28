@@ -816,12 +816,10 @@ public class AddressBook {
         try {
             lines = new ArrayList<>(Files.readAllLines(Paths.get(filePath)));
         } catch (FileNotFoundException fnfe) {
-            showToUser(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE,
-                    filePath));
+            showToUser(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE, filePath));
             exitProgram();
         } catch (IOException ioe) {
-            showToUser(String.format(MESSAGE_ERROR_READING_FROM_FILE,
-                    filePath));
+            showToUser(String.format(MESSAGE_ERROR_READING_FROM_FILE, filePath));
             exitProgram();
         }
         return lines;
