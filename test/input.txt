@@ -93,7 +93,6 @@
   # listing indexes get updated on next request
   delete 1
   list
-
 ##########################################################
 # test clear command
 ##########################################################
@@ -101,6 +100,23 @@
   # clears all
   clear
   list
+
+##########################################################
+# test add person command, setup state for further tests
+##########################################################
+
+  # add 5 people
+  add Adam Brown p/111111 e/adam@gmail.com
+  add Charlie Dickson e/charlie.d@nus.edu.sg p/333333
+  add Esther Potato p/555555 e/esther@notreal.potato
+  add Betsy Choo p/222222 e/benchoo@nus.edu.sg
+  add Dickson Ee e/dickson@nus.edu.sg p/444444
+
+  # list all 5 people
+  list
+
+  # sort them
+  sort
 
 ##########################################################
 # test exit command

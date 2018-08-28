@@ -1,0 +1,5 @@
+Adam Brown p/111111 e/adam@gmail.com
+Charlie Dickson p/333333 e/charlie.d@nus.edu.sg
+Esther Potato p/555555 e/esther@notreal.potato
+Betsy Choo p/222222 e/benchoo@nus.edu.sg
+Dickson Ee p/444444 e/dickson@nus.edu.sg
