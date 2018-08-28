@@ -395,8 +395,7 @@ public class AddressBook {
      * @return feedback about how the command was executed
      */
     private static String executeCommand(String userInputString) {
-        final String[] commandTypeAndParams =
-                splitCommandWordAndArgs(userInputString);
+        final String[] commandTypeAndParams = splitCommandWordAndArgs(userInputString);
         final String commandType = commandTypeAndParams[0];
         final String commandArgs = commandTypeAndParams[1];
         switch (commandType) {
@@ -415,8 +414,7 @@ public class AddressBook {
         case COMMAND_EXIT_WORD:
             executeExitProgramRequest();
         default:
-            return getMessageForInvalidCommandInput(commandType,
-                    getUsageInfoForAllCommands());
+            return getMessageForInvalidCommandInput(commandType, getUsageInfoForAllCommands());
         }
     }
 
