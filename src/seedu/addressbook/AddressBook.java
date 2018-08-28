@@ -697,15 +697,14 @@ public class AddressBook {
     /**
      * Returns the display string representation of the list of persons.
      */
-    private static String getDisplayString(ArrayList<HashMap<PersonProperty,
-            String>> persons) {
+    private static String getDisplayString(ArrayList<HashMap<PersonProperty, String>> persons) {
         final StringBuilder messageAccumulator = new StringBuilder();
         for (int i = 0; i < persons.size(); i++) {
             final HashMap<PersonProperty, String> person = persons.get(i);
             final int displayIndex = i + DISPLAYED_INDEX_OFFSET;
-            messageAccumulator.append('\t')
-                    .append(getIndexedPersonListElementMessage(displayIndex,
-                            person))
+            messageAccumulator
+                    .append('\t')
+                    .append(getIndexedPersonListElementMessage(displayIndex, person))
                     .append(LS);
         }
         return messageAccumulator.toString();
