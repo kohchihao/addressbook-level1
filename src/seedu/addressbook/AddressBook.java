@@ -959,10 +959,10 @@ public class AddressBook {
      * @param person to be encoded
      * @return encoded string
      */
-    private static String encodePersonToString(HashMap<PersonProperty,
-            String> person) {
+    private static String encodePersonToString(HashMap<PersonProperty, String> person) {
         return String.format(PERSON_STRING_REPRESENTATION,
-                getNameFromPerson(person), getPhoneFromPerson(person),
+                getNameFromPerson(person),
+                getPhoneFromPerson(person),
                 getEmailFromPerson(person));
     }
 
