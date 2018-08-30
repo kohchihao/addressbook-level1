@@ -14,7 +14,18 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Scanner;
+import java.util.Set;
+
+
 
 /*
  * NOTE : =============================================================
@@ -412,10 +423,8 @@ public class AddressBook {
      * @param correctUsageInfo message showing the correct usage
      * @return invalid command args feedback message
      */
-    private static String getMessageForInvalidCommandInput(String userCommand
-            , String correctUsageInfo) {
-        return String.format(MESSAGE_INVALID_COMMAND_FORMAT, userCommand,
-                correctUsageInfo);
+    private static String getMessageForInvalidCommandInput(String userCommand, String correctUsageInfo) {
+        return String.format(MESSAGE_INVALID_COMMAND_FORMAT, userCommand, correctUsageInfo);
     }
 
     /**
@@ -428,8 +437,7 @@ public class AddressBook {
      */
     private static String executeAddPerson(String commandArgs) {
         // try decoding a person from the raw args
-        final Optional<HashMap<PersonProperty, String>> decodeResult =
-                decodePersonFromString(commandArgs);
+        final Optional<HashMap<PersonProperty, String>> decodeResult = decodePersonFromString(commandArgs);
 
         // checks if args are valid (decode result will not be present if the
         // person is invalid)
@@ -443,8 +451,7 @@ public class AddressBook {
 
         // checks if args are valid (decode result will not be present if the
         // person is invalid)
-        return getMessageForInvalidCommandInput(COMMAND_ADD_WORD,
-                getUsageInfoForAddCommand());
+        return getMessageForInvalidCommandInput(COMMAND_ADD_WORD, getUsageInfoForAddCommand());
     }
 
     /**
@@ -457,7 +464,8 @@ public class AddressBook {
      */
     private static String getMessageForSuccessfulAddPerson(HashMap<PersonProperty, String> addedPerson) {
         return String.format(MESSAGE_ADDED,
-                getNameFromPerson(addedPerson), getPhoneFromPerson(addedPerson),
+                getNameFromPerson(addedPerson),
+                getPhoneFromPerson(addedPerson),
                 getEmailFromPerson(addedPerson));
     }
 
@@ -471,8 +479,8 @@ public class AddressBook {
      */
     private static String executeFindPersons(String commandArgs) {
         final Set<String> keywords = extractKeywordsFromFindPersonArgs(commandArgs);
-        final ArrayList<HashMap<PersonProperty, String>> personsFound
-                = getPersonsWithNameContainingAnyKeyword(keywords);
+        final ArrayList<HashMap<PersonProperty, String>> personsFound =
+                getPersonsWithNameContainingAnyKeyword(keywords);
         showToUser(personsFound);
         return getMessageForPersonsDisplayedSummary(personsFound);
     }
@@ -627,10 +635,8 @@ public class AddressBook {
     /**
      * Comparator to sort name by alphabetical order.
      */
-    private static class SortByName implements Comparator<HashMap<PersonProperty,String>>
-    {
-        public int compare(HashMap<PersonProperty,String> personA, HashMap<PersonProperty,String> personB)
-        {
+    private static class SortByName implements Comparator<HashMap<PersonProperty, String>> {
+        public int compare(HashMap<PersonProperty, String> personA, HashMap<PersonProperty, String> personB) {
             return personA.get(PersonProperty.NAME).compareTo(personB.get(PersonProperty.NAME));
         }
     }
@@ -715,8 +721,8 @@ public class AddressBook {
      * @param person       to show
      * @return formatted listing message with index
      */
-    private static String getIndexedPersonListElementMessage(int visibleIndex
-            , HashMap<PersonProperty, String> person) {
+    private static String getIndexedPersonListElementMessage(int visibleIndex,
+                                                             HashMap<PersonProperty, String> person) {
         return String.format(MESSAGE_DISPLAY_LIST_ELEMENT_INDEX, visibleIndex)
                 + getMessageForFormattedPersonData(person);
     }
@@ -794,8 +800,8 @@ public class AddressBook {
      * @return the list of decoded persons
      */
     private static ArrayList<HashMap<PersonProperty, String>> loadPersonsFromFile(String filePath) {
-        final Optional<ArrayList<HashMap<PersonProperty, String>>> successfullyDecoded
-                = decodePersonsFromStrings(getLinesInFile(filePath));
+        final Optional<ArrayList<HashMap<PersonProperty, String>>> successfullyDecoded =
+                decodePersonsFromStrings(getLinesInFile(filePath));
         if (!successfullyDecoded.isPresent()) {
             showToUser(MESSAGE_INVALID_STORAGE_FILE_CONTENT);
             exitProgram();
