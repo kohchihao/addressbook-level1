@@ -626,18 +626,22 @@ public class AddressBook {
      * @return feedback display message for the operation result
      */
     private static String executeSortListAllPersonsInAddressBook() {
-        ArrayList<HashMap<PersonProperty, String>> toBeDisplayed = getAllPersonsInAddressBook();
-        toBeDisplayed.sort(new SortByName());
-        showToUser(toBeDisplayed);
-        return getMessageForPersonsDisplayedSummary(toBeDisplayed);
+        ArrayList<HashMap<PersonProperty, String>> allPersonsInAddressBook = getAllPersonsInAddressBook();
+        ArrayList<HashMap<PersonProperty, String>> sortedAllPersonsInAddressBook = new ArrayList<>();
+        sortedAllPersonsInAddressBook.addAll(allPersonsInAddressBook);
+        sortedAllPersonsInAddressBook.sort(new SortByName());
+        showToUser(sortedAllPersonsInAddressBook);
+        return getMessageForPersonsDisplayedSummary(sortedAllPersonsInAddressBook);
     }
 
     /**
      * Comparator to sort name by alphabetical order.
      */
     private static class SortByName implements Comparator<HashMap<PersonProperty, String>> {
-        public int compare(HashMap<PersonProperty, String> personA, HashMap<PersonProperty, String> personB) {
-            return personA.get(PersonProperty.NAME).compareTo(personB.get(PersonProperty.NAME));
+        public int compare(HashMap<PersonProperty, String> personOne, HashMap<PersonProperty, String> personTwo) {
+            String personOneName = personOne.get(PersonProperty.NAME).toLowerCase();
+            String personTwoName = personTwo.get(PersonProperty.NAME).toLowerCase();
+            return personOneName.compareTo(personTwoName);
         }
     }
 
